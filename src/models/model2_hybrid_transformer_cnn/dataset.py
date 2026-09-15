@@ -6,14 +6,25 @@ Keras Sequence đọc manifest CSV và sinh ra batch tọa độ Landmarks
 
     - inputs: shape (batch_size, 21, 3) (Toạ độ 21 khớp đã chuẩn hoá)
     - targets: shape (batch_size, num_classes) (one-hot labels)
+
+NÂNG CẤP so với bản gốc (để chuẩn bị cho hướng Skeleton-based / ST-TR):
+    1. Ưu tiên dùng WORLD LANDMARKS (cột "w0".."w62", đơn vị mét, bất biến
+       thật sự với khoảng cách/góc camera) nếu CSV có; fallback về image
+       landmarks ("r0".."r62") nếu không có (tương thích ngược với CSV cũ).
+    2. MIRROR tay trái thành "tay phải chuẩn" dựa vào cột "handedness" (nếu
+       có trong CSV) — giảm 1 nửa biến thiên hình học cần học.
+    3. ROTATION NORMALIZATION: xoay landmark trong mặt phẳng XY sao cho
+       vector cổ tay (0) -> gốc ngón giữa (9) luôn chỉ theo cùng 1 hướng
+       chuẩn, loại bỏ biến thiên do bàn tay bị xoay/nghiêng trong khung hình
+       — điều mà chuẩn hoá dịch gốc + scale (bản cũ) KHÔNG xử lý được.
 """
 
-import cv2
 import numpy as np
 import pandas as pd
 import tensorflow as tf
 from typing import List
 from configs.config import PreprocessConfig
+from src.preprocessing.normalize_landmarks import normalize_landmark_full
 
 
 class LandmarkHybridDataset(tf.keras.utils.Sequence):
@@ -27,8 +38,21 @@ class LandmarkHybridDataset(tf.keras.utils.Sequence):
         self.batch_size = cfg.hybrid.batch_size
         self.rng = np.random.default_rng(seed)
 
-        # Lấy tên 63 cột tọa độ: r0 đến r62
-        self.feature_cols = [f"r{i}" for i in range(63)]
+        # Ưu tiên world landmarks (w0..w62) nếu CSV có (chỉ có khi chạy lại
+        # extract_landmarks.py bản mới); fallback về image landmarks (r0..r62).
+        self.use_world = all(f"w{i}" in self.df.columns for i in range(63))
+        prefix = "w" if self.use_world else "r"
+        self.feature_cols = [f"{prefix}{i}" for i in range(63)]
+
+        self.has_handedness = "handedness" in self.df.columns
+        if not self.use_world:
+            print("[LandmarkHybridDataset] CẢNH BÁO: không tìm thấy cột world landmarks "
+                  "(w0..w62) trong CSV — dùng image landmarks (r0..r62). Để có world "
+                  "landmarks, chạy lại extract_landmarks.py bản mới nhất.")
+        if not self.has_handedness:
+            print("[LandmarkHybridDataset] CẢNH BÁO: không có cột 'handedness' — bỏ qua "
+                  "bước mirror tay trái/phải.")
+
         self.on_epoch_end()
 
     def __len__(self) -> int:
@@ -38,16 +62,21 @@ class LandmarkHybridDataset(tf.keras.utils.Sequence):
         if self.training and len(self.df) > 0:
             self.df = self.df.sample(frac=1.0, random_state=int(self.rng.integers(0, 1000000))).reset_index(drop=True)
 
-    def _normalize_landmarks(self, landmarks: np.ndarray) -> np.ndarray:
-        origin = landmarks[self.cfg.normalize.origin_index]
-        translated = landmarks - origin
-        idx1, idx2 = self.cfg.normalize.reference_pair
-        ref_distance = np.linalg.norm(translated[idx1] - translated[idx2])
+    def _mirror_if_left(self, landmarks: np.ndarray, handedness) -> np.ndarray:
+        """[Giữ lại để tương thích ngược] — xem normalize_landmark_full() dùng chung."""
+        from src.preprocessing.normalize_landmarks import mirror_if_left
+        return mirror_if_left(landmarks, handedness)
 
-        scaled = translated / ref_distance if ref_distance > 1e-6 else translated
-        if not self.cfg.normalize.normalize_z:
-            scaled[:, 2] = translated[:, 2]
-        return scaled
+    def _canonicalize_rotation(self, landmarks: np.ndarray) -> np.ndarray:
+        """[Giữ lại để tương thích ngược] — xem normalize_landmark_full() dùng chung."""
+        from src.preprocessing.normalize_landmarks import canonicalize_rotation
+        return canonicalize_rotation(landmarks, self.cfg.normalize.reference_pair)
+
+    def _normalize_landmarks(self, landmarks: np.ndarray, handedness=None) -> np.ndarray:
+        # DÙNG CHUNG với inference (demo_webcam_model2.py) qua
+        # normalize_landmark_full() — đảm bảo train và inference tuyệt đối
+        # khớp công thức, tránh lệch (train/inference skew).
+        return normalize_landmark_full(landmarks, self.cfg.normalize, handedness)
 
     def __getitem__(self, idx: int):
         batch_df = self.df.iloc[idx * self.batch_size: (idx + 1) * self.batch_size]
@@ -59,7 +88,8 @@ class LandmarkHybridDataset(tf.keras.utils.Sequence):
         X_batch, y_batch = [], []
 
         for i, (_, row) in enumerate(batch_df.iterrows()):
-            landmarks = self._normalize_landmarks(batch_landmarks[i])
+            handedness = row["handedness"] if self.has_handedness else None
+            landmarks = self._normalize_landmarks(batch_landmarks[i], handedness)
 
             if self.training:
                 noise = self.rng.normal(0, self.cfg.hybrid.gaussian_noise_std, landmarks.shape)
@@ -72,3 +102,13 @@ class LandmarkHybridDataset(tf.keras.utils.Sequence):
         y_arr = tf.keras.utils.to_categorical(y_batch, num_classes=len(self.class_labels))
 
         return X_arr, y_arr
+
+    def close(self):
+        """
+        No-op — LandmarkHybridDataset chỉ đọc CSV toạ độ có sẵn, KHÔNG mở
+        MediaPipe context (khác với bản đọc ảnh trực tiếp trước đây), nên
+        không có tài nguyên nào cần giải phóng. Giữ method này để tương
+        thích với train.py / notebook đang gọi train_ds.close(), val_ds.close()
+        — nếu không có hàm này sẽ crash AttributeError ngay sau khi train xong.
+        """
+        pass

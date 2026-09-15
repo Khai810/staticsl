@@ -97,6 +97,90 @@ def normalize_flat_vector(flat_63: np.ndarray, cfg: NormalizeConfig) -> np.ndarr
     return normalize_landmarks(flat_63.reshape(21, 3), cfg)
 
 
+# ============================================================================
+# PHẦN 1B — CHUẨN HOÁ NÂNG CAO: mirror tay trái + rotation (DÙNG CHUNG cho
+# cả training (dataset.py) VÀ inference (demo_webcam_model2.py), để đảm bảo
+# 2 nơi này TUYỆT ĐỐI khớp công thức — lệch dù chỉ 1 chi tiết nhỏ cũng làm
+# model dự đoán sai khi chạy thật (train/inference skew).
+# ============================================================================
+
+def mirror_if_left(landmarks: np.ndarray, handedness: Optional[str]) -> np.ndarray:
+    """
+    Lật landmark theo trục X nếu là tay trái, quy mọi mẫu về dạng "tay phải
+    chuẩn" (1 ký hiệu ký bằng tay trái/phải là ảnh gương của nhau).
+
+    Tham số:
+        landmarks (np.ndarray): shape (21, 3), CHƯA dịch gốc/scale.
+        handedness (Optional[str]): "Left", "Right", hoặc None (bỏ qua mirror
+            nếu không có thông tin — ví dụ CSV cũ chưa có cột handedness).
+    """
+    if handedness == "Left":
+        landmarks = landmarks.copy()
+        landmarks[:, 0] = -landmarks[:, 0]
+    return landmarks
+
+
+def canonicalize_rotation(landmarks_translated: np.ndarray, reference_pair: tuple) -> np.ndarray:
+    """
+    Xoay landmark (ĐÃ dịch gốc về origin_index, ví dụ cổ tay) trong mặt
+    phẳng XY sao cho vector origin -> reference_pair[1] luôn chỉ theo cùng
+    1 hướng chuẩn (+Y). Loại bỏ biến thiên do bàn tay bị xoay/nghiêng trong
+    khung hình — điều mà chuẩn hoá dịch gốc + scale đơn thuần KHÔNG xử lý được.
+
+    Tham số:
+        landmarks_translated (np.ndarray): shape (21, 3), ĐÃ trừ origin.
+        reference_pair (tuple): (idx1, idx2) — thường lấy từ
+            NormalizeConfig.reference_pair, mặc định (0, 9).
+    """
+    idx1, idx2 = reference_pair
+    vx = landmarks_translated[idx2, 0] - landmarks_translated[idx1, 0]
+    vy = landmarks_translated[idx2, 1] - landmarks_translated[idx1, 1]
+    theta = np.arctan2(vx, vy)
+    cos_t, sin_t = np.cos(theta), np.sin(theta)
+    rot = np.array([[cos_t, -sin_t], [sin_t, cos_t]], dtype=np.float32)
+
+    out = landmarks_translated.copy()
+    out[:, :2] = landmarks_translated[:, :2] @ rot.T
+    return out
+
+
+def normalize_landmark_full(
+    landmarks_raw: np.ndarray,
+    cfg: NormalizeConfig,
+    handedness: Optional[str] = None,
+) -> np.ndarray:
+    """
+    HÀM CHUẨN HOÁ ĐẦY ĐỦ — dùng CHUNG cho cả training và inference:
+        1. Mirror tay trái -> tay phải chuẩn (nếu có handedness).
+        2. Dịch gốc về origin_index (mặc định: cổ tay).
+        3. Xoay về hướng chuẩn (canonicalize_rotation).
+        4. Chia scale theo khoảng cách tham chiếu.
+
+    Tham số:
+        landmarks_raw (np.ndarray): shape (21, 3), toạ độ THÔ (chưa xử lý gì).
+        cfg (NormalizeConfig): xem config.py.
+        handedness (Optional[str]): "Left"/"Right"/None.
+
+    Trả về:
+        np.ndarray shape (21, 3) đã chuẩn hoá đầy đủ — input trực tiếp cho model.
+    """
+    landmarks = mirror_if_left(landmarks_raw, handedness)
+
+    origin = landmarks[cfg.origin_index]
+    translated = landmarks - origin
+
+    translated = canonicalize_rotation(translated, cfg.reference_pair)
+
+    idx1, idx2 = cfg.reference_pair
+    ref_distance = np.linalg.norm(translated[idx1] - translated[idx2])
+    scaled = translated / ref_distance if ref_distance > 1e-6 else translated
+
+    if not cfg.normalize_z:
+        scaled[:, 2] = translated[:, 2]
+
+    return scaled.astype(np.float32)
+
+
 def normalize_batch(landmarks_batch: np.ndarray, cfg: NormalizeConfig) -> np.ndarray:
     """
     Chuẩn hoá HÀNG LOẠT — dùng khi xử lý toàn bộ 1 tập ảnh (Model 1) cùng lúc.

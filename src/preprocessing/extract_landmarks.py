@@ -66,9 +66,13 @@ class ExtractionResult:
     """Kết quả trả về sau khi trích xuất 1 ảnh/frame."""
 
     success: bool
-    landmarks_raw: Optional[np.ndarray]      # shape (21, 3)
-    landmarks_flat: Optional[np.ndarray]     # shape (63,)
-    bbox_xyxy: Optional[List[float]]         # [x_min, y_min, x_max, y_max] (pixel)
+    landmarks_raw: Optional[np.ndarray]        # shape (21, 3) — toạ độ ẢNH (0..1, tương đối khung hình)
+    landmarks_flat: Optional[np.ndarray]       # shape (63,)  — flatten của landmarks_raw
+    bbox_xyxy: Optional[List[float]]           # [x_min, y_min, x_max, y_max] (pixel)
+    world_landmarks_raw: Optional[np.ndarray] = None   # shape (21, 3) — toạ độ 3D THỰC (mét), gốc tại tâm bàn tay
+    world_landmarks_flat: Optional[np.ndarray] = None  # shape (63,)
+    handedness: Optional[str] = None                    # "Left" hoặc "Right", theo góc nhìn của người trong ảnh
+    handedness_score: Optional[float] = None
 
 
 class HandLandmarkExtractor:
@@ -134,22 +138,35 @@ class HandLandmarkExtractor:
             else mp.tasks.vision.RunningMode.VIDEO
         )
 
-        base_options = mp.tasks.BaseOptions(
-            model_asset_path=self._model_asset_path,
-            # Bật ép buộc dùng GPU tại đây
-            delegate=mp.tasks.BaseOptions.Delegate.GPU
-        )
+        def _build(delegate) -> "mp.tasks.vision.HandLandmarker":
+            base_options = mp.tasks.BaseOptions(
+                model_asset_path=self._model_asset_path,
+                delegate=delegate,
+            )
+            options = mp.tasks.vision.HandLandmarkerOptions(
+                base_options=base_options,
+                running_mode=running_mode,
+                num_hands=self._num_hands,
+                min_hand_detection_confidence=self._min_detection_confidence,
+                min_hand_presence_confidence=self._min_hand_presence_confidence,
+                min_tracking_confidence=self._min_tracking_confidence,
+            )
+            return mp.tasks.vision.HandLandmarker.create_from_options(options)
 
-        options = mp.tasks.vision.HandLandmarkerOptions(
-            base_options=base_options,
-            running_mode=running_mode,
-            num_hands=self._num_hands,
-            min_hand_detection_confidence=self._min_detection_confidence,
-            min_hand_presence_confidence=self._min_hand_presence_confidence,
-            min_tracking_confidence=self._min_tracking_confidence,
-        )
-
-        return mp.tasks.vision.HandLandmarker.create_from_options(options)
+        # QUAN TRỌNG: KHÔNG hard-code GPU delegate. Nhiều môi trường (Colab
+        # CPU-only runtime, máy không có GPU driver tương thích) sẽ CRASH
+        # ngay khi khởi tạo nếu ép buộc GPU. Thử GPU trước (nếu người dùng
+        # yêu cầu), fallback về CPU nếu khởi tạo GPU thất bại.
+        prefer_gpu = bool(getattr(self.cfg, "use_gpu_delegate", False))
+        if prefer_gpu:
+            try:
+                return _build(mp.tasks.BaseOptions.Delegate.GPU)
+            except Exception as e:
+                print(
+                    f"[extract_landmarks] CẢNH BÁO: Không khởi tạo được GPU delegate "
+                    f"({e}). Tự động chuyển sang CPU."
+                )
+        return _build(mp.tasks.BaseOptions.Delegate.CPU)
 
     @staticmethod
     def _to_mp_image(image_bgr: np.ndarray) -> mp.Image:
@@ -209,7 +226,42 @@ class HandLandmarkExtractor:
             float(ys_px.max()),
         ]
 
-        return ExtractionResult(True, raw, flat, bbox)
+        # --- NÂNG CẤP: World Landmarks (toạ độ 3D THỰC, đơn vị mét) ---
+        # Khác với `raw` ở trên (toạ độ ẢNH, phụ thuộc góc nhìn/khoảng cách
+        # camera), world_landmarks là toạ độ 3D THỰC trong không gian, gốc
+        # đặt tại tâm hình học bàn tay — bất biến với khoảng cách/góc nghiêng
+        # camera một cách CHÍNH XÁC hơn nhiều so với việc chuẩn hoá thủ công
+        # trên toạ độ ảnh (chia scale theo 1 cặp điểm chỉ xấp xỉ được điều
+        # này). Đây là input "skeleton" đúng nghĩa cho hướng ST-TR.
+        world_raw, world_flat = None, None
+        if getattr(result, "hand_world_landmarks", None):
+            world_hand = result.hand_world_landmarks[0]
+            world_raw = np.array(
+                [[lm.x, lm.y, lm.z] for lm in world_hand], dtype=np.float32
+            )
+            world_flat = world_raw.flatten()
+
+        # --- NÂNG CẤP: Handedness (tay trái/phải) ---
+        # Dùng để MIRROR tay trái thành dạng "tay phải chuẩn" khi chuẩn hoá
+        # (xem normalize_landmarks.py) — giảm 1 nửa biến thiên hình học mà
+        # model phải học (1 ký hiệu ký bằng tay trái và tay phải về bản chất
+        # là ảnh gương của nhau).
+        handedness_label, handedness_score = None, None
+        if getattr(result, "handedness", None):
+            top = result.handedness[0][0]
+            handedness_label = top.category_name  # "Left" hoặc "Right"
+            handedness_score = float(top.score)
+
+        return ExtractionResult(
+            success=True,
+            landmarks_raw=raw,
+            landmarks_flat=flat,
+            bbox_xyxy=bbox,
+            world_landmarks_raw=world_raw,
+            world_landmarks_flat=world_flat,
+            handedness=handedness_label,
+            handedness_score=handedness_score,
+        )
 
     def close(self):
         """Giải phóng tài nguyên MediaPipe Tasks."""
@@ -278,6 +330,13 @@ def extract_from_image_dataset(
                     f"r{i}": value
                     for i, value in enumerate(result.landmarks_flat)
                 }
+                # NÂNG CẤP: lưu thêm world landmarks (w0..w62) + handedness.
+                # Nếu model asset không hỗ trợ world landmarks, các cột này
+                # sẽ là NaN — code ở normalize_landmarks.py cần xử lý fallback.
+                if result.world_landmarks_flat is not None:
+                    for i, value in enumerate(result.world_landmarks_flat):
+                        row[f"w{i}"] = value
+                row["handedness"] = result.handedness
                 row["label"] = label
                 row["source_file"] = img_path.name
                 rows.append(row)

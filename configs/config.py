@@ -46,8 +46,25 @@ class MediaPipeConfig:
 
     # Độ phức tạp mô hình MediaPipe: 0 (nhanh, kém chính xác) hoặc 1 (chính
     # xác hơn, chậm hơn). Máy CPU yếu nên để 0; máy khá hơn nên để 1.
+    # LƯU Ý: chỉ áp dụng cho API cũ mediapipe.solutions.hands (bản <0.10.30).
     model_complexity: int = 1
+
+    # ---- Các field dưới đây dành cho MediaPipe Tasks API (HandLandmarker,
+    # bản mediapipe >=0.10.30) — dùng bởi extract_landmarks.py phiên bản mới ----
+
+    # Đường dẫn model asset .task cho HandLandmarker (bắt buộc với Tasks API).
+    # Tải tại: https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task
     model_asset_path: str = "src/models/hand_landmarker.task"
+
+    # Ngưỡng tin cậy "hand presence" (bàn tay có thực sự đang hiện diện
+    # trong vùng đã phát hiện hay không) — riêng của Tasks API.
+    min_hand_presence_confidence: float = 0.5
+
+    # Có ưu tiên dùng GPU delegate hay không. MẶC ĐỊNH TẮT (False) vì nhiều
+    # môi trường (đặc biệt Colab CPU-only runtime) sẽ CRASH khi khởi tạo
+    # HandLandmarker nếu ép buộc GPU mà không có driver phù hợp. Code trong
+    # extract_landmarks.py sẽ tự fallback về CPU nếu GPU khởi tạo lỗi.
+    use_gpu_delegate: bool = False
 
 
 @dataclass
@@ -112,33 +129,73 @@ class SequenceConfig:
 
 @dataclass
 class HybridConfig:
-    """Tham số riêng cho Model 2 — Landmark-based Hybrid Transformer-CNN."""
+    """
+    Tham số riêng cho Model 2 — Hybrid Transformer-CNN (Dual-Path CNN + ViT).
 
-    # Augmentation: Giờ đây ta dùng toạ độ nên sẽ áp dụng "Jittering" toạ độ
-    gaussian_noise_std: float = 0.02  # Biên độ nhiễu cộng vào điểm khớp
+    Tham chiếu bài báo: Aly, M. & Fathi, I. S. "Recognizing American Sign
+    Language gestures efficiently and accurately using a hybrid transformer
+    model." Scientific Reports 15, 20253 (2025). DOI: 10.1038/s41598-025-06344-8
 
-    # --- Kiến trúc Nhánh 1: 1D-CNN ---
+    QUAN TRỌNG: Model 2 phiên bản này KHÔNG còn dùng landmark/chuỗi thời gian
+    (khác bản BiLSTM cũ). Model học trực tiếp trên ẢNH TĨNH ASL Alphabet,
+    kiến trúc gồm 2 nhánh CNN song song (Primary: ảnh toàn cục; Auxiliary:
+    vùng tay đã tăng cường) + ViT tinh chỉnh mỗi nhánh + fusion bằng phép
+    nhân element-wise.
+    """
+
+    # Kích thước ảnh đầu vào sau khi resize — đúng theo bài báo gốc (64x64).
+    image_size: int = 64
+
+    # --- Augmentation (chỉ áp dụng cho tập TRAIN, theo đúng bài báo) ---
+    rotation_range_deg: float = 20.0       # xoay ngẫu nhiên trong khoảng ±20°
+    horizontal_flip_prob: float = 0.5      # lật ngang với xác suất 50%
+    gaussian_noise_std: float = 0.02       # độ lệch chuẩn nhiễu Gaussian (ảnh đã chuẩn hoá 0..1)
+    brightness_delta: float = 0.2          # biên độ điều chỉnh độ sáng ngẫu nhiên
+    contrast_range: Tuple[float, float] = (0.8, 1.2)  # hệ số điều chỉnh tương phản
+    random_crop_pad: int = 8               # số pixel pad trước khi crop ngẫu nhiên lại về image_size
+
+    # --- Nhánh Auxiliary (hand-specific / tăng cường vùng tay) ---
+    # Bbox tay dùng MediaPipe (tái dùng extract_landmarks.py) để CROP vùng tay
+    # trước khi áp dụng adaptive threshold + Canny + histogram equalization.
+    # Nếu MediaPipe không phát hiện được tay, dùng nguyên ảnh gốc làm auxiliary.
+    use_mediapipe_crop: bool = True
+    aux_bbox_padding_ratio: float = 0.20   # nới rộng bbox tay trước khi crop
+    canny_threshold1: int = 50
+    canny_threshold2: int = 150
+    adaptive_thresh_block_size: int = 11   # phải là số lẻ
+    adaptive_thresh_C: int = 2
+
+    # --- Kiến trúc Dual-Path CNN (mỗi nhánh) ---
+    # Theo bài báo: 2 lớp conv/path, kernel 3x3 stride 1, ReLU, maxpool 2x2 stride 2.
     cnn_filters: Tuple[int, int] = (32, 64)
+    cnn_kernel_size: int = 3
+    pool_size: int = 2
 
-    # --- Kiến trúc Nhánh 2: Spatial Transformer ---
+    # --- Kiến trúc Vision Transformer (mỗi nhánh có 1 ViT riêng) ---
+    patch_size: int = 16          # theo bài báo: patch 16x16 trên feature map
     vit_num_layers: int = 2       # 2 lớp encoder
     vit_num_heads: int = 4        # 4 attention heads
-    vit_embed_dim: int = 128      # Kích thước embedding của mỗi token (điểm khớp)
-    vit_mlp_dim: int = 256        # FFN hidden layer
+    vit_embed_dim: int = 128      # kích thước embedding của mỗi patch token
+    vit_mlp_dim: int = 256        # kích thước lớp feed-forward trong encoder
     vit_dropout: float = 0.1
 
     # --- Classification head ---
     fc_hidden_dim: int = 128
     fc_dropout: float = 0.3
 
-    # --- Huấn luyện ---
+    # --- Huấn luyện (theo đúng thông số bài báo) ---
     batch_size: int = 64
-    learning_rate: float = 1e-4
-    weight_decay: float = 1e-4
-    epochs: int = 60
-    early_stopping_patience: int = 10
+    learning_rate: float = 1e-4     # AdamW, lr=0.0001
+    weight_decay: float = 1e-4      # L2 weight decay cho AdamW
+    epochs: int = 60                # bài báo train 60 epoch
+    early_stopping_patience: int = 60  # patience theo validation loss
     lr_schedule: str = "cosine_decay"
 
+    # Danh sách nhãn CHO RIÊNG Model 2 — dùng đúng cấu trúc chuẩn của bộ
+    # Kaggle "ASL Alphabet Dataset" (29 lớp: A-Z + del/nothing/space), khác
+    # với cfg.class_labels (26 chữ) dùng cho Model 1 & Model 3. Model 2 học
+    # trực tiếp trên ảnh nên KHÔNG bị giới hạn bởi việc J/Z cần chuyển động
+    # (ảnh trong bộ Kaggle vẫn là tư thế tĩnh của J/Z, không phải video).
     hybrid_class_labels: List[str] = field(
         default_factory=lambda: [chr(c) for c in range(ord("A"), ord("Z") + 1)]
         + ["del", "nothing", "space"]
@@ -200,7 +257,7 @@ class PreprocessConfig:
     dynamic_labels: List[str] = field(default_factory=lambda: ["J", "Z"])
 
     # ---- Đường dẫn dữ liệu (chỉnh lại theo máy của bạn) ----
-    raw_images_dir: str = "data/raw/asl_alphabet/asl_alphabet_train"
+    raw_images_dir: str = "data/raw/asl_alphabet"
     raw_videos_dir: str = "data/raw/custom_captured_sequences"  # KHÔNG CÒN DÙNG cho Model 2 (đã bỏ BiLSTM)
     landmarks_csv_path: str = "data/landmarks/landmarks_raw.csv"        # output extract_landmarks.py (Model 1)
     landmarks_seq_dir: str = "data/landmarks/sequences_raw"             # (giữ lại, không dùng cho Model 2 nữa)
