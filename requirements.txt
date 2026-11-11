@@ -1,12 +1,13 @@
 
 mediapipe==0.10.31
-
 tensorflow
-
 opencv-python>=4.8
 numpy
 pandas
 scikit-learn
+matplotlib
+seaborn
+python-docx
 tqdm
 
 # Dùng cho Model 3 (YOLOv11n):
