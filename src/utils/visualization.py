@@ -14,7 +14,7 @@ import seaborn as sns
 from typing import List, Tuple, Dict, Optional
 
 # Visual styling
-plt.rcParams['font.sans-serif'] = 'Arial'
+plt.rcParams['font.sans-serif'] = ['DejaVu Sans', 'Liberation Sans', 'Arial', 'sans-serif']
 plt.rcParams['font.family'] = 'sans-serif'
 plt.rcParams['figure.dpi'] = 300
 

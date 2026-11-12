@@ -16,11 +16,13 @@ def augment_landmarks_light(
     scale_range: Tuple[float, float] = (0.93, 1.07),
     jitter_std: float = 0.008,
     joint_dropout_prob: float = 0.03,
+    mirror_prob: float = 0.5,
     rng: Optional[np.random.Generator] = None
 ) -> np.ndarray:
     """
     Applies light augmentation on normalized landmarks of shape (21, 3).
     Preserves anatomical consistency while improving model generalization.
+    Includes horizontal mirror flip (x -> -x) to recognize left/right hands or inverted webcam orientations.
     """
     if rng is None:
         rng = np.random.default_rng()
@@ -58,8 +60,12 @@ def augment_landmarks_light(
         for idx_offset, dropped in enumerate(mask):
             if dropped:
                 joint_idx = idx_offset + 1
-                # Perturb joint by slight displacement
                 perturb = rng.normal(0.0, jitter_std * 2.5, size=(3,)).astype(np.float32)
                 aug[joint_idx] += perturb
-                
+
+    # 5. Horizontal Hand Mirror Flip (Lật tay ngang trục X)
+    # Giúp mô hình nhận diện chính xác cả tay trái lẫn tay phải / webcam bị lật ngược
+    if mirror_prob > 0 and rng.uniform(0.0, 1.0) < mirror_prob:
+        aug[:, 0] = -aug[:, 0]
+
     return aug.astype(np.float32)
