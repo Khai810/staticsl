@@ -1,0 +1,362 @@
+{
+  "created_utc": "2026-11-14T10:46:51.688733+00:00",
+  "repository": "https://github.com/Khai810/staticsl",
+  "base_commit": "e3faf2cbf60e50e05cad9a07054fe402f350d1de",
+  "branch": "codex/bao-yolo11n-auto-v2-20261114",
+  "destination": "src/models/model3_yolov11",
+  "scope": "Only added files inside existing model3 folder; no existing tracked file changed or deleted",
+  "original_init_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "trained_source_files_verified": 27,
+  "trained_source_hashes": {
+    "src/asl_yolo/__init__.py": "5b3f2c07cc8f54e822e487f686db37c777d94fcfb43958ef1327a9e2f1c9a96b",
+    "src/asl_yolo/autoreview532.py": "c45db0f4c16706eef5b08e7223263b42b0d633716e9075b46d1b9d3792ff7ba8",
+    "src/asl_yolo/capture29.py": "259a62ece844bec5ebed991ed8131239e3949b220ae1fa3d07af274ac0bcde44",
+    "src/asl_yolo/core.py": "69d1e8ab3aeef8ee2562121e38e4061eb9b809a7d9969fdf9e6a8930e5f75d78",
+    "src/asl_yolo/data.py": "ddf58ae439f551ca5fc10588a447038afeac81ad839ffbb0c8f7e30c0664c88f",
+    "src/asl_yolo/dataset29.py": "bafc55716bd25d12593feff1220d6f6dd239dbd62fe9f027952282aa02ac3e6e",
+    "src/asl_yolo/demo.py": "678c88eeef5eec1feed80adabe0bc86759c68888a871fb5cc615ed9bf7f88f4e",
+    "src/asl_yolo/evaluation.py": "78bee8347361a5d1cf667cd98c31fb68721dd5fe479037b0f2f367f5345096c8",
+    "src/asl_yolo/export.py": "2aa34413a750ae2615dddeb4e5e8775b02d89e446a5b95f988f2d21652e84cb8",
+    "src/asl_yolo/preprocess532.py": "75a07871f1a6f611708401ae39370961e6c1b0173fa0593b3d045a9742ff9277",
+    "src/asl_yolo/protocol.py": "d8ef3477f4c30db8d60315059d3c5f5e8597f79b5748c2448626ed1f90707578",
+    "src/asl_yolo/review.py": "c7cb6033952275eb63a4616acde676989fd23ea285485699089ef4451b35feb6",
+    "src/asl_yolo/review532.py": "a354acb10b52928e5aa5bc50b617f0d537e6bf8318862bd0fe5c767f73501d85",
+    "src/asl_yolo/train_release/__init__.py": "ed491b61b6eba6738bbdfd6da4b4f07241828fd0eb3987284835b10ea2ced593",
+    "src/asl_yolo/train_release/benchmark.py": "fed436c7671c8f14ef294120787429cb04c1a4ee62d11730d11362b59493d039",
+    "src/asl_yolo/train_release/cli.py": "a809ce2a338879257ba2164c311946f2e42b6f558e1281cba5860556d0735831",
+    "src/asl_yolo/train_release/config.py": "c7e182cd34bd90a207eec8904e9ebacca9b944b72f3db0304e5269be45f7d4b1",
+    "src/asl_yolo/train_release/dataset.py": "e42e07815b2d977ed9715081fb0fecb22c297d8158aa2590048e93df20f35a1a",
+    "src/asl_yolo/train_release/engine.py": "97989db14a475910457a04b86162f4ccafe270c70f668bd69d01b7129b1e0054",
+    "src/asl_yolo/train_release/metrics.py": "51867e67f8584219c5b64695d96e95058c8099139e730cb844656a46efa83b59",
+    "src/asl_yolo/train_release/reporting.py": "6beedf4351d91a4c5208cd4ce26f3a65d3eeb094763921821fc6216d20e326cb",
+    "src/asl_yolo/train_release/runner.py": "dc98c11bfe058289459c7004954b15eefa9052b19be21fe7306cd5512156ccfa",
+    "src/asl_yolo/train_release/storage.py": "f3bbb784ff67eec858cba450019453d4c1615e39f9dd82dbf6dea203ace6fa1e",
+    "src/asl_yolo/training.py": "7da1db6cb27589d3bda6baae9a35b9d9f5605ff7ec328a36b08bd6b01d6b0dbf",
+    "src/asl_yolo/vision.py": "d52888bb8fdb52d768570c4ac4cfabf2b58905edc2dddee767fddea0f73bc78a",
+    "src/asl_yolo/webcam.py": "938a6f3c7beecc7a0d330f37fc6b63646da520c7c7a26887c6800c8c39c2ef02",
+    "scripts/train_release.py": "a6e0daa4ccd8acb6dad745e2e7bffe2159bb687cf5ad76bd995689a963bff7a9"
+  },
+  "copied_files": {
+    "src/asl_yolo/__init__.py": {
+      "source": "src/asl_yolo/__init__.py",
+      "sha256": "5b3f2c07cc8f54e822e487f686db37c777d94fcfb43958ef1327a9e2f1c9a96b"
+    },
+    "src/asl_yolo/autoreview532.py": {
+      "source": "src/asl_yolo/autoreview532.py",
+      "sha256": "c45db0f4c16706eef5b08e7223263b42b0d633716e9075b46d1b9d3792ff7ba8"
+    },
+    "src/asl_yolo/capture29.py": {
+      "source": "src/asl_yolo/capture29.py",
+      "sha256": "259a62ece844bec5ebed991ed8131239e3949b220ae1fa3d07af274ac0bcde44"
+    },
+    "src/asl_yolo/core.py": {
+      "source": "src/asl_yolo/core.py",
+      "sha256": "69d1e8ab3aeef8ee2562121e38e4061eb9b809a7d9969fdf9e6a8930e5f75d78"
+    },
+    "src/asl_yolo/data.py": {
+      "source": "src/asl_yolo/data.py",
+      "sha256": "ddf58ae439f551ca5fc10588a447038afeac81ad839ffbb0c8f7e30c0664c88f"
+    },
+    "src/asl_yolo/dataset29.py": {
+      "source": "src/asl_yolo/dataset29.py",
+      "sha256": "bafc55716bd25d12593feff1220d6f6dd239dbd62fe9f027952282aa02ac3e6e"
+    },
+    "src/asl_yolo/demo.py": {
+      "source": "src/asl_yolo/demo.py",
+      "sha256": "678c88eeef5eec1feed80adabe0bc86759c68888a871fb5cc615ed9bf7f88f4e"
+    },
+    "src/asl_yolo/evaluation.py": {
+      "source": "src/asl_yolo/evaluation.py",
+      "sha256": "78bee8347361a5d1cf667cd98c31fb68721dd5fe479037b0f2f367f5345096c8"
+    },
+    "src/asl_yolo/export.py": {
+      "source": "src/asl_yolo/export.py",
+      "sha256": "2aa34413a750ae2615dddeb4e5e8775b02d89e446a5b95f988f2d21652e84cb8"
+    },
+    "src/asl_yolo/preprocess532.py": {
+      "source": "src/asl_yolo/preprocess532.py",
+      "sha256": "75a07871f1a6f611708401ae39370961e6c1b0173fa0593b3d045a9742ff9277"
+    },
+    "src/asl_yolo/protocol.py": {
+      "source": "src/asl_yolo/protocol.py",
+      "sha256": "d8ef3477f4c30db8d60315059d3c5f5e8597f79b5748c2448626ed1f90707578"
+    },
+    "src/asl_yolo/review.py": {
+      "source": "src/asl_yolo/review.py",
+      "sha256": "c7cb6033952275eb63a4616acde676989fd23ea285485699089ef4451b35feb6"
+    },
+    "src/asl_yolo/review532.py": {
+      "source": "src/asl_yolo/review532.py",
+      "sha256": "a354acb10b52928e5aa5bc50b617f0d537e6bf8318862bd0fe5c767f73501d85"
+    },
+    "src/asl_yolo/train_release/__init__.py": {
+      "source": "src/asl_yolo/train_release/__init__.py",
+      "sha256": "ed491b61b6eba6738bbdfd6da4b4f07241828fd0eb3987284835b10ea2ced593"
+    },
+    "src/asl_yolo/train_release/benchmark.py": {
+      "source": "src/asl_yolo/train_release/benchmark.py",
+      "sha256": "fed436c7671c8f14ef294120787429cb04c1a4ee62d11730d11362b59493d039"
+    },
+    "src/asl_yolo/train_release/cli.py": {
+      "source": "src/asl_yolo/train_release/cli.py",
+      "sha256": "a809ce2a338879257ba2164c311946f2e42b6f558e1281cba5860556d0735831"
+    },
+    "src/asl_yolo/train_release/config.py": {
+      "source": "src/asl_yolo/train_release/config.py",
+      "sha256": "c7e182cd34bd90a207eec8904e9ebacca9b944b72f3db0304e5269be45f7d4b1"
+    },
+    "src/asl_yolo/train_release/dataset.py": {
+      "source": "src/asl_yolo/train_release/dataset.py",
+      "sha256": "e42e07815b2d977ed9715081fb0fecb22c297d8158aa2590048e93df20f35a1a"
+    },
+    "src/asl_yolo/train_release/engine.py": {
+      "source": "src/asl_yolo/train_release/engine.py",
+      "sha256": "97989db14a475910457a04b86162f4ccafe270c70f668bd69d01b7129b1e0054"
+    },
+    "src/asl_yolo/train_release/metrics.py": {
+      "source": "src/asl_yolo/train_release/metrics.py",
+      "sha256": "51867e67f8584219c5b64695d96e95058c8099139e730cb844656a46efa83b59"
+    },
+    "src/asl_yolo/train_release/reporting.py": {
+      "source": "src/asl_yolo/train_release/reporting.py",
+      "sha256": "6beedf4351d91a4c5208cd4ce26f3a65d3eeb094763921821fc6216d20e326cb"
+    },
+    "src/asl_yolo/train_release/runner.py": {
+      "source": "src/asl_yolo/train_release/runner.py",
+      "sha256": "dc98c11bfe058289459c7004954b15eefa9052b19be21fe7306cd5512156ccfa"
+    },
+    "src/asl_yolo/train_release/storage.py": {
+      "source": "src/asl_yolo/train_release/storage.py",
+      "sha256": "f3bbb784ff67eec858cba450019453d4c1615e39f9dd82dbf6dea203ace6fa1e"
+    },
+    "src/asl_yolo/training.py": {
+      "source": "src/asl_yolo/training.py",
+      "sha256": "7da1db6cb27589d3bda6baae9a35b9d9f5605ff7ec328a36b08bd6b01d6b0dbf"
+    },
+    "src/asl_yolo/vision.py": {
+      "source": "src/asl_yolo/vision.py",
+      "sha256": "d52888bb8fdb52d768570c4ac4cfabf2b58905edc2dddee767fddea0f73bc78a"
+    },
+    "src/asl_yolo/webcam.py": {
+      "source": "src/asl_yolo/webcam.py",
+      "sha256": "938a6f3c7beecc7a0d330f37fc6b63646da520c7c7a26887c6800c8c39c2ef02"
+    },
+    "pyproject.toml": {
+      "source": "pyproject.toml",
+      "sha256": "4c98d0a8d8674c11ee90de2adbb30066de764f9e784e535d1b6b57b990fafdd7"
+    },
+    "requirements-training-colab.txt": {
+      "source": "requirements-training-colab.txt",
+      "sha256": "8fe02cd04a1aef16190d18aa7b45ea1d3977701a26567a2e096a38478815ae02"
+    },
+    "requirements-local.in": {
+      "source": "requirements-local.in",
+      "sha256": "3c5d0b7ea5ae429e5843e49fc6acfc96393751cb3d79816494cdea30bdc88152"
+    },
+    "configs/asl_yolo11n_auto_v2_training.json": {
+      "source": "configs/asl_yolo11n_auto_v2_training.json",
+      "sha256": "cfb7c3cdf505ea9f8ee60e7dce206db7c60fd79b6f4924e298c1d751b99df658"
+    },
+    "notebooks/03_asl_auto_v2_training.ipynb": {
+      "source": "notebooks/03_asl_auto_v2_training.ipynb",
+      "sha256": "5af22a2231dad6ef82dc644a3554c0cd637fb92ed78296f4dfa75c6a23c53657"
+    },
+    "tests/test_training_release.py": {
+      "source": "tests/test_training_release.py",
+      "sha256": "65584aece3961b85d996d34e7f7ed11fb868666b8e4efa186a47df07c05f6fef"
+    },
+    "scripts/train_release.py": {
+      "source": "scripts/train_release.py",
+      "sha256": "a6e0daa4ccd8acb6dad745e2e7bffe2159bb687cf5ad76bd995689a963bff7a9"
+    },
+    "scripts/package_training_release.py": {
+      "source": "scripts/package_training_release.py",
+      "sha256": "9901dd3b67d0d2088452b71ceb3b5b15fe3001a8f307ffa78ba3d9c3aabbab81"
+    },
+    "scripts/build_training_notebook.py": {
+      "source": "scripts/build_training_notebook.py",
+      "sha256": "20ed46bc9a4dff8ba500c412d9dbf99a6c6defff087980994e9d626109cfa55e"
+    },
+    "scripts/prepare_colab_upload_parts.py": {
+      "source": "scripts/prepare_colab_upload_parts.py",
+      "sha256": "4f2d2f7bd4e462314f945cfefd92c7b93302517e795b0b15c69345b3d0376d90"
+    },
+    "scripts/review_trained_baseline.py": {
+      "source": "scripts/review_trained_baseline.py",
+      "sha256": "2cd1c8df8c805a9da1223134f2dfd0d0cf9f9aa9b1a975e347581b0ba6992f1f"
+    },
+    "reports/asl_yolo11n_auto_v2_training_20261113/IMPLEMENTATION_PLAN.md": {
+      "source": "reports/asl_yolo11n_auto_v2_training_20261113/IMPLEMENTATION_PLAN.md",
+      "sha256": "07cdc59c6d17bb3b3052ad17ada668ffdbe7e2566576eda6bc6d8f3a1c9cc6b2"
+    },
+    "reports/asl_yolo11n_auto_v2_training_20261113/SKELETON.md": {
+      "source": "reports/asl_yolo11n_auto_v2_training_20261113/SKELETON.md",
+      "sha256": "739a3072aa558b62cbce91f01057ad2bb1e79668b959ac1d6578ff13dead1627"
+    },
+    "reports/asl_yolo11n_auto_v2_training_20261113/CODE_GUIDE.md": {
+      "source": "reports/asl_yolo11n_auto_v2_training_20261113/CODE_GUIDE.md",
+      "sha256": "bc18547e329ccda5f26f6a537af7d6009540496595536c49785693d8f118d1d1"
+    },
+    "reports/asl_yolo11n_auto_v2_training_20261113/REPORT.md": {
+      "source": "reports/asl_yolo11n_auto_v2_training_20261113/REPORT.md",
+      "sha256": "8224db837f82af411857953abae5d30c7ebfadd4b7f415972b3484a7186754d4"
+    },
+    "reports/asl_yolo11n_auto_v2_training_20261113/IMPORTANT_STEPS.md": {
+      "source": "reports/asl_yolo11n_auto_v2_training_20261113/IMPORTANT_STEPS.md",
+      "sha256": "1aa50b273816957ef90c860c030bf45f465b70af2dd3f32de9acb4da4759512e"
+    },
+    "reports/asl_yolo11n_auto_v2_training_20261113/skeleton_snapshot/scripts/train_release.py": {
+      "source": "reports/asl_yolo11n_auto_v2_training_20261113/skeleton_snapshot/scripts/train_release.py",
+      "sha256": "a6e0daa4ccd8acb6dad745e2e7bffe2159bb687cf5ad76bd995689a963bff7a9"
+    },
+    "reports/asl_yolo11n_auto_v2_training_20261113/skeleton_snapshot/src/asl_yolo/train_release/__init__.py": {
+      "source": "reports/asl_yolo11n_auto_v2_training_20261113/skeleton_snapshot/src/asl_yolo/train_release/__init__.py",
+      "sha256": "ed491b61b6eba6738bbdfd6da4b4f07241828fd0eb3987284835b10ea2ced593"
+    },
+    "reports/asl_yolo11n_auto_v2_training_20261113/skeleton_snapshot/src/asl_yolo/train_release/cli.py": {
+      "source": "reports/asl_yolo11n_auto_v2_training_20261113/skeleton_snapshot/src/asl_yolo/train_release/cli.py",
+      "sha256": "4fe719d2cf48088a1937bfee8335ac25aacb44bc919754e53629b639e50740bb"
+    },
+    "reports/asl_yolo11n_auto_v2_training_20261113/skeleton_snapshot/src/asl_yolo/train_release/config.py": {
+      "source": "reports/asl_yolo11n_auto_v2_training_20261113/skeleton_snapshot/src/asl_yolo/train_release/config.py",
+      "sha256": "183d7d5285bae55eabe9f18cf23a80a0fbf621a06f266554eb9dc4104a3f8955"
+    },
+    "reports/asl_yolo11n_auto_v2_training_20261113/skeleton_snapshot/src/asl_yolo/train_release/dataset.py": {
+      "source": "reports/asl_yolo11n_auto_v2_training_20261113/skeleton_snapshot/src/asl_yolo/train_release/dataset.py",
+      "sha256": "35ce0b51abe7e15a687ec280f7a5264268f547165c411907488ce7e154b05e5c"
+    },
+    "reports/asl_yolo11n_auto_v2_training_20261113/skeleton_snapshot/src/asl_yolo/train_release/engine.py": {
+      "source": "reports/asl_yolo11n_auto_v2_training_20261113/skeleton_snapshot/src/asl_yolo/train_release/engine.py",
+      "sha256": "cbd81bed4e56f4f9741f98388f46ba60463932361212dfd4910baccff1941f9e"
+    },
+    "reports/asl_yolo11n_auto_v2_training_20261113/skeleton_snapshot/src/asl_yolo/train_release/metrics.py": {
+      "source": "reports/asl_yolo11n_auto_v2_training_20261113/skeleton_snapshot/src/asl_yolo/train_release/metrics.py",
+      "sha256": "1fe78249a5d071be1742fadb1d6bdd44b858d6d91d824d63632b876eac57a58a"
+    },
+    "reports/asl_yolo11n_auto_v2_training_20261113/skeleton_snapshot/src/asl_yolo/train_release/reporting.py": {
+      "source": "reports/asl_yolo11n_auto_v2_training_20261113/skeleton_snapshot/src/asl_yolo/train_release/reporting.py",
+      "sha256": "9815d32b6bc34fa8e23fbb4fc315f00d71cf0b5d18aa88ad269760c15887fcef"
+    },
+    "reports/asl_yolo11n_auto_v2_training_20261113/skeleton_snapshot/src/asl_yolo/train_release/runner.py": {
+      "source": "reports/asl_yolo11n_auto_v2_training_20261113/skeleton_snapshot/src/asl_yolo/train_release/runner.py",
+      "sha256": "f79b4159ef7c68cd1646b6656efa4cc7d4d3a9e12b3681dfde4ae3e27da35a9f"
+    },
+    "reports/asl_yolo11n_auto_v2_training_20261113/skeleton_snapshot/src/asl_yolo/train_release/storage.py": {
+      "source": "reports/asl_yolo11n_auto_v2_training_20261113/skeleton_snapshot/src/asl_yolo/train_release/storage.py",
+      "sha256": "64f807a18494f62089f8a3c6e4bcdbc2894fe645177c3523f80bb1fc3552acb5"
+    },
+    "reports/baseline_20261114/summary.json": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/summary.json",
+      "sha256": "a7dd7313563d6d8129a19c02cd29855e28f54a772c7c4a26e85d3ae8bc239b92"
+    },
+    "reports/baseline_20261114/class_mapping.json": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/class_mapping.json",
+      "sha256": "4c4405d0bdf613586802346643c161fbd7c7f17decc7dcc2e2e819811964fd80"
+    },
+    "reports/baseline_20261114/inference_review.json": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/inference_review.json",
+      "sha256": "5363d00354858505e271a603a6088dadce7e83ec43d7e0bebc4d9179a406115c"
+    },
+    "reports/baseline_20261114/metrics/history.csv": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/metrics/history.csv",
+      "sha256": "aa723e086edb134f87a5a66e0b1ec11dedc15ed1c9b3ced50969283588f8c176"
+    },
+    "reports/baseline_20261114/metrics/per_class_fixed.csv": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/metrics/per_class_fixed.csv",
+      "sha256": "65abae114208abf8cdad664c4f1d5caab548802d74c2de222546683e5a10d4d3"
+    },
+    "reports/baseline_20261114/metrics/per_class_selected.csv": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/metrics/per_class_selected.csv",
+      "sha256": "375bde8c6aff6372f09fbb9679e7a679a7709e150cae3b7302c16d1841cb8684"
+    },
+    "reports/baseline_20261114/metrics/validation_sweep.csv": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/metrics/validation_sweep.csv",
+      "sha256": "3e9a3d29932a385e56730b7fbfe7b4555076d78f279486ef199b7bcd1a110803"
+    },
+    "reports/baseline_20261114/metrics/confusion_fixed025_counts.csv": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/metrics/confusion_fixed025_counts.csv",
+      "sha256": "471353c306ae2b2cbff8240b35edb8839416698cdc647b8f3cfc598fe34b1bd3"
+    },
+    "reports/baseline_20261114/metrics/confusion_fixed025_normalized.csv": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/metrics/confusion_fixed025_normalized.csv",
+      "sha256": "f4d38c787c6bd0812350f9ffb0897cb60b1da9df3f339e857fbb92f8f682e466"
+    },
+    "reports/baseline_20261114/metrics/confusion_selected005_counts.csv": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/metrics/confusion_selected005_counts.csv",
+      "sha256": "7f59d9d6b1a2e1e5a29311d9826d437d3ae8a610d7292aeba1d4f59c7cdc1581"
+    },
+    "reports/baseline_20261114/metrics/confusion_selected005_normalized.csv": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/metrics/confusion_selected005_normalized.csv",
+      "sha256": "538e01333e2677ab6bf31f4e1aa76b9ee21ae4b0bcb52edc7caecc8c1c80fc55"
+    },
+    "reports/baseline_20261114/figures/learning_curves.png": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/figures/learning_curves.png",
+      "sha256": "26cc48aa1b929c21284e3fe099a1ccd0cd8f9d47427adaa164068f9991f5b6c9"
+    },
+    "reports/baseline_20261114/figures/learning_curves.svg": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/figures/learning_curves.svg",
+      "sha256": "7f4039fb202cba3bd96e770ec2c4c146a9c6bf58d2083c476e3232628a1fbcef"
+    },
+    "reports/baseline_20261114/figures/validation_progress.png": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/figures/validation_progress.png",
+      "sha256": "1ab7064ea65d4103e3a8520e5f3964319fe74b604d3c8f30fc0fa239da85d344"
+    },
+    "reports/baseline_20261114/figures/validation_progress.svg": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/figures/validation_progress.svg",
+      "sha256": "a7d2b190cba4cbbe2a92aadb511539664fc31a33e74817b861e8c17b059e644d"
+    },
+    "reports/baseline_20261114/figures/coverage_accuracy_threshold.png": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/figures/coverage_accuracy_threshold.png",
+      "sha256": "e1026e774582fdaec15f4b2ebea7070780f11e4fbcd9c95e60a1d90f65feafd1"
+    },
+    "reports/baseline_20261114/figures/coverage_accuracy_threshold.svg": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/figures/coverage_accuracy_threshold.svg",
+      "sha256": "9e808fdf7a593c758fe0ec6894b84b83656828f99e3adaedd745e02abbfe60b9"
+    },
+    "reports/baseline_20261114/figures/per_class_f1_support.png": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/figures/per_class_f1_support.png",
+      "sha256": "df0b958afc0763dbdfe978deaf8022332cf2ac5a82eb4fc37d87d98e4da458d2"
+    },
+    "reports/baseline_20261114/figures/per_class_f1_support.svg": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/figures/per_class_f1_support.svg",
+      "sha256": "3f68670d66860d82612e04de51db981b52ffad0fbc789dd19d249e00d0a8bd32"
+    },
+    "reports/baseline_20261114/figures/confusion_fixed025_counts.png": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/figures/confusion_fixed025_counts.png",
+      "sha256": "567b54dc0fcb34663159e09e591240a6989609cbc680a1940f86a4bd37b41e48"
+    },
+    "reports/baseline_20261114/figures/confusion_fixed025_counts.svg": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/figures/confusion_fixed025_counts.svg",
+      "sha256": "d54170aaf0e312e89590954e9c11af35d817be270a1f0d561634fb69c23d408f"
+    },
+    "reports/baseline_20261114/figures/confusion_fixed025_normalized.png": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/figures/confusion_fixed025_normalized.png",
+      "sha256": "75d8527ce27f215c0eeba5c4329e03cf4d34451f599b14bd87213147c9df4e0c"
+    },
+    "reports/baseline_20261114/figures/confusion_fixed025_normalized.svg": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/figures/confusion_fixed025_normalized.svg",
+      "sha256": "e7281299150b3dffc829aa9a75562f356acac2155029aaa075a32cf4d0031f14"
+    },
+    "reports/baseline_20261114/figures/native_detection_epoch49/BoxPR_curve.png": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/figures/native_detection_epoch49/BoxPR_curve.png",
+      "sha256": "f0d84372096fc194192b3ffb71fcef46e72fbb9813dc9838d4f6bcab6c7c1034"
+    },
+    "reports/baseline_20261114/figures/native_detection_epoch49/BoxF1_curve.png": {
+      "source": "reports/asl_yolo11n_baseline_review_20261114/figures/native_detection_epoch49/BoxF1_curve.png",
+      "sha256": "1af0b121c977f5f0a3e750321abca0a83f07924b526c8f21349f0c9b0e62f629"
+    }
+  },
+  "validation": {
+    "status": "passed",
+    "tests_passed": 13,
+    "tests_failed": 0,
+    "test_file": "tests/test_training_release.py",
+    "python_files_parsed": 42,
+    "notebook_code_cells_parsed": 9,
+    "notebook_outputs_empty": true,
+    "secret_scan": "passed",
+    "cli_help": "passed",
+    "trained_source_files_verified": 27,
+    "data_or_training_run_during_publication": false
+  }
+}

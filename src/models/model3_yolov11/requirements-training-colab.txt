@@ -1,0 +1,11 @@
+# Direct dependencies pinned to the inspected local stack. Colab GPU execution still needs verification.
+# Keep Colab's torch/torchvision/CUDA; install with a generated constraints file.
+ultralytics==8.4.178
+numpy==2.4.6
+pandas==2.3.3
+matplotlib==3.11.2
+Pillow==12.3.0
+PyYAML==6.0.3
+psutil==7.2.2
+opencv-python==4.14.0.94
+pytest==9.1.1

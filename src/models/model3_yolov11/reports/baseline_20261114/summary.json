@@ -1,0 +1,587 @@
+{
+  "run_id": "20261114T065750Z_baseline_d5cb4953",
+  "baseline_epochs": 50,
+  "total_technical_and_baseline_epochs": 57,
+  "training_completed": true,
+  "gpu": "Tesla T4",
+  "session_seconds": 7177.1836606980005,
+  "train_images": 9042,
+  "val_images": 3909,
+  "val_positive": 3842,
+  "val_background": 67,
+  "selected_epoch": 45,
+  "selected_checkpoint_sha256": "512e24b594c2183913936d94b1b881b4ca7dd59d0a721989ac4a211e7b00cb88",
+  "native_best_epoch": 49,
+  "fingerprint": "fbb9d072079f9a08d42e953d5927b232f64497f0d4d3d3e8e9309e045772efdf",
+  "fixed": {
+    "threshold": 0.25,
+    "accuracy": 0.9825611660593441,
+    "correct": 3775,
+    "n_positive": 3842,
+    "accuracy_wilson95": [
+      0.9779141182554788,
+      0.9862441913637215
+    ],
+    "val_macro_f1_supported": 0.9867400066299353,
+    "macro_precision_supported": 0.9919735870508691,
+    "macro_recall_supported": 0.9816660238975471,
+    "weighted_f1": 0.9870369965100806,
+    "supported_classes": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+      "P",
+      "Q",
+      "R",
+      "S",
+      "T",
+      "U",
+      "V",
+      "W",
+      "X",
+      "Y",
+      "Z",
+      "del",
+      "space"
+    ],
+    "macro_class_count": 28,
+    "excluded_from_macro": [
+      "nothing"
+    ],
+    "confusion_rows": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+      "P",
+      "Q",
+      "R",
+      "S",
+      "T",
+      "U",
+      "V",
+      "W",
+      "X",
+      "Y",
+      "Z",
+      "del",
+      "nothing",
+      "space"
+    ],
+    "confusion_columns": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+      "P",
+      "Q",
+      "R",
+      "S",
+      "T",
+      "U",
+      "V",
+      "W",
+      "X",
+      "Y",
+      "Z",
+      "del",
+      "nothing",
+      "space",
+      "NO_DETECTION"
+    ],
+    "accepted_positive": 3807,
+    "coverage": 0.9908901613742842,
+    "accepted_accuracy": 0.9915944313107433,
+    "no_detection_positive": 35,
+    "multiple_detection_images": 112,
+    "n_background": 67,
+    "background_correct_rejections": 67,
+    "background_correct_rejection_rate": 1.0,
+    "background_false_positives": 0,
+    "background_false_positive_rate": 0.0,
+    "top_confusions": [
+      {
+        "truth": "Q",
+        "predicted": "NO_DETECTION",
+        "count": 3
+      },
+      {
+        "truth": "O",
+        "predicted": "NO_DETECTION",
+        "count": 3
+      },
+      {
+        "truth": "P",
+        "predicted": "NO_DETECTION",
+        "count": 3
+      },
+      {
+        "truth": "T",
+        "predicted": "NO_DETECTION",
+        "count": 3
+      },
+      {
+        "truth": "R",
+        "predicted": "NO_DETECTION",
+        "count": 2
+      },
+      {
+        "truth": "Z",
+        "predicted": "NO_DETECTION",
+        "count": 2
+      },
+      {
+        "truth": "E",
+        "predicted": "T",
+        "count": 2
+      },
+      {
+        "truth": "del",
+        "predicted": "NO_DETECTION",
+        "count": 2
+      },
+      {
+        "truth": "F",
+        "predicted": "NO_DETECTION",
+        "count": 2
+      },
+      {
+        "truth": "X",
+        "predicted": "NO_DETECTION",
+        "count": 2
+      },
+      {
+        "truth": "I",
+        "predicted": "NO_DETECTION",
+        "count": 2
+      },
+      {
+        "truth": "I",
+        "predicted": "G",
+        "count": 2
+      },
+      {
+        "truth": "A",
+        "predicted": "NO_DETECTION",
+        "count": 2
+      },
+      {
+        "truth": "B",
+        "predicted": "F",
+        "count": 2
+      },
+      {
+        "truth": "W",
+        "predicted": "F",
+        "count": 2
+      },
+      {
+        "truth": "H",
+        "predicted": "NO_DETECTION",
+        "count": 2
+      },
+      {
+        "truth": "U",
+        "predicted": "V",
+        "count": 2
+      },
+      {
+        "truth": "R",
+        "predicted": "D",
+        "count": 1
+      },
+      {
+        "truth": "I",
+        "predicted": "X",
+        "count": 1
+      },
+      {
+        "truth": "U",
+        "predicted": "NO_DETECTION",
+        "count": 1
+      }
+    ],
+    "mn_confusions": {
+      "M_to_N": 0,
+      "N_to_M": 1
+    },
+    "split": "val",
+    "average_scope": "positive images only; background FP reported separately"
+  },
+  "selected": {
+    "threshold": 0.05,
+    "accuracy": 0.9872462259239979,
+    "correct": 3793,
+    "n_positive": 3842,
+    "accuracy_wilson95": [
+      0.9831799211669863,
+      0.9903391487397792
+    ],
+    "val_macro_f1_supported": 0.9879344552483416,
+    "macro_precision_supported": 0.9893268808267843,
+    "macro_recall_supported": 0.9866664949626233,
+    "weighted_f1": 0.9881477199048391,
+    "supported_classes": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+      "P",
+      "Q",
+      "R",
+      "S",
+      "T",
+      "U",
+      "V",
+      "W",
+      "X",
+      "Y",
+      "Z",
+      "del",
+      "space"
+    ],
+    "macro_class_count": 28,
+    "excluded_from_macro": [
+      "nothing"
+    ],
+    "confusion_rows": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+      "P",
+      "Q",
+      "R",
+      "S",
+      "T",
+      "U",
+      "V",
+      "W",
+      "X",
+      "Y",
+      "Z",
+      "del",
+      "nothing",
+      "space"
+    ],
+    "confusion_columns": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+      "P",
+      "Q",
+      "R",
+      "S",
+      "T",
+      "U",
+      "V",
+      "W",
+      "X",
+      "Y",
+      "Z",
+      "del",
+      "nothing",
+      "space",
+      "NO_DETECTION"
+    ],
+    "accepted_positive": 3835,
+    "coverage": 0.9981780322748568,
+    "accepted_accuracy": 0.9890482398956976,
+    "no_detection_positive": 7,
+    "multiple_detection_images": 384,
+    "n_background": 67,
+    "background_correct_rejections": 67,
+    "background_correct_rejection_rate": 1.0,
+    "background_false_positives": 0,
+    "background_false_positive_rate": 0.0,
+    "top_confusions": [
+      {
+        "truth": "I",
+        "predicted": "X",
+        "count": 2
+      },
+      {
+        "truth": "U",
+        "predicted": "R",
+        "count": 2
+      },
+      {
+        "truth": "E",
+        "predicted": "T",
+        "count": 2
+      },
+      {
+        "truth": "O",
+        "predicted": "NO_DETECTION",
+        "count": 2
+      },
+      {
+        "truth": "N",
+        "predicted": "M",
+        "count": 2
+      },
+      {
+        "truth": "I",
+        "predicted": "G",
+        "count": 2
+      },
+      {
+        "truth": "B",
+        "predicted": "F",
+        "count": 2
+      },
+      {
+        "truth": "W",
+        "predicted": "F",
+        "count": 2
+      },
+      {
+        "truth": "U",
+        "predicted": "V",
+        "count": 2
+      },
+      {
+        "truth": "R",
+        "predicted": "D",
+        "count": 1
+      },
+      {
+        "truth": "L",
+        "predicted": "J",
+        "count": 1
+      },
+      {
+        "truth": "O",
+        "predicted": "Q",
+        "count": 1
+      },
+      {
+        "truth": "Z",
+        "predicted": "G",
+        "count": 1
+      },
+      {
+        "truth": "del",
+        "predicted": "NO_DETECTION",
+        "count": 1
+      },
+      {
+        "truth": "P",
+        "predicted": "del",
+        "count": 1
+      },
+      {
+        "truth": "D",
+        "predicted": "G",
+        "count": 1
+      },
+      {
+        "truth": "G",
+        "predicted": "H",
+        "count": 1
+      },
+      {
+        "truth": "Z",
+        "predicted": "R",
+        "count": 1
+      },
+      {
+        "truth": "Y",
+        "predicted": "NO_DETECTION",
+        "count": 1
+      },
+      {
+        "truth": "A",
+        "predicted": "E",
+        "count": 1
+      }
+    ],
+    "mn_confusions": {
+      "M_to_N": 0,
+      "N_to_M": 2
+    },
+    "split": "val",
+    "average_scope": "positive images only; background FP reported separately"
+  },
+  "selected_detection": {
+    "metrics/precision(B)": 0.95675,
+    "metrics/recall(B)": 0.95215,
+    "metrics/mAP50(B)": 0.96297,
+    "metrics/mAP50-95(B)": 0.68973
+  },
+  "native_detection": {
+    "train/box_loss": 0.39517,
+    "train/cls_loss": 0.23124,
+    "train/dfl_loss": 0.96259,
+    "metrics/precision(B)": 0.95902,
+    "metrics/recall(B)": 0.9504,
+    "metrics/mAP50(B)": 0.96352,
+    "metrics/mAP50-95(B)": 0.6973,
+    "val/box_loss": 0.98026,
+    "val/cls_loss": 0.45772,
+    "val/dfl_loss": 1.20565,
+    "lr/pg0": 0.0004960000000000005,
+    "lr/pg1": 0.0004960000000000005,
+    "lr/pg2": 0.0004960000000000005,
+    "threshold": 0.25,
+    "accuracy": 0.9823008849557522,
+    "correct": 3774,
+    "n_positive": 3842,
+    "val_macro_f1_supported": 0.9860793580740461,
+    "macro_precision_supported": 0.9916308948781356,
+    "macro_recall_supported": 0.9807309602163546,
+    "weighted_f1": 0.986780211102924,
+    "macro_class_count": 28,
+    "accepted_positive": 3807,
+    "coverage": 0.9908901613742842,
+    "accepted_accuracy": 0.9913317572892041,
+    "no_detection_positive": 35,
+    "multiple_detection_images": 102,
+    "n_background": 67,
+    "background_correct_rejections": 67,
+    "background_correct_rejection_rate": 1.0,
+    "background_false_positives": 0,
+    "background_false_positive_rate": 0.0,
+    "split": "val",
+    "average_scope": "positive images only; background FP reported separately",
+    "epoch": 49,
+    "epoch_seconds": 136.9024760680004,
+    "total_seconds": 6657.638050242002,
+    "peak_gpu_bytes": 592707072,
+    "verified_optimizer_steps": 141,
+    "native_fitness": 0.6973,
+    "checkpoint_role": "EMA float32 validation; raw model separately retained for resume"
+  },
+  "last_epoch": {
+    "train/box_loss": 0.38973,
+    "train/cls_loss": 0.22936,
+    "train/dfl_loss": 0.96245,
+    "metrics/precision(B)": 0.95896,
+    "metrics/recall(B)": 0.9502,
+    "metrics/mAP50(B)": 0.96419,
+    "metrics/mAP50-95(B)": 0.69691,
+    "val/box_loss": 0.97984,
+    "val/cls_loss": 0.45642,
+    "val/dfl_loss": 1.20722,
+    "lr/pg0": 0.0002980000000000002,
+    "lr/pg1": 0.0002980000000000002,
+    "lr/pg2": 0.0002980000000000002,
+    "threshold": 0.25,
+    "accuracy": 0.9830817282665278,
+    "correct": 3777,
+    "n_positive": 3842,
+    "val_macro_f1_supported": 0.9867141408776433,
+    "macro_precision_supported": 0.9917486321765383,
+    "macro_recall_supported": 0.9818426349940287,
+    "weighted_f1": 0.9871898257964961,
+    "macro_class_count": 28,
+    "accepted_positive": 3810,
+    "coverage": 0.9916710046850599,
+    "accepted_accuracy": 0.9913385826771653,
+    "no_detection_positive": 32,
+    "multiple_detection_images": 112,
+    "n_background": 67,
+    "background_correct_rejections": 67,
+    "background_correct_rejection_rate": 1.0,
+    "background_false_positives": 0,
+    "background_false_positive_rate": 0.0,
+    "split": "val",
+    "average_scope": "positive images only; background FP reported separately",
+    "epoch": 50,
+    "epoch_seconds": 135.94998583000051,
+    "total_seconds": 6793.588036072002,
+    "peak_gpu_bytes": 592707072,
+    "verified_optimizer_steps": 142,
+    "native_fitness": 0.69691,
+    "checkpoint_role": "EMA float32 validation; raw model separately retained for resume"
+  },
+  "integrity": {
+    "history_contiguous": true,
+    "commit_markers": 50,
+    "selected_sha256_verified": true,
+    "last_resume_sha256_verified": true,
+    "per_epoch_prediction_replay_matches_original": true,
+    "checkpoint_load_verified": true,
+    "source_files_changed_since_training": [],
+    "all50_checkpoint_bytes_verified": false
+  },
+  "last10_macro_f1": {
+    "min": 0.9851834161696983,
+    "max": 0.9867400066299353,
+    "std": 0.0004654888234493372
+  },
+  "source_scope": "Replay full saved Colab validation predictions of selected epoch45; no new model inference except technical one-image load check",
+  "val_analysis_artifacts_on_drive_initially": false,
+  "final_test_run": false,
+  "benchmark_run": false,
+  "review_only": true,
+  "remote_run_modified": false
+}

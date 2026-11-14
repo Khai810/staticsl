@@ -1,0 +1,22 @@
+# Windows / Python 3.11. Resolve to requirements-local.txt before installing.
+# CPU PyTorch is intentional: training targets Colab, local work targets webcam.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.5.1+cpu
+torchvision==0.20.1+cpu
+ultralytics>=8.3,<9
+mediapipe>=0.10.30,<0.11
+# Both upstream packages declare different OpenCV distributions; match versions.
+opencv-python==4.14.0.94
+opencv-contrib-python==4.14.0.94
+numpy>=1.26,<3
+pandas>=2.2,<3
+matplotlib>=3.9,<4
+scikit-learn>=1.5,<2
+pillow>=10.4
+pyyaml>=6,<7
+imagehash>=4.3,<5
+kaggle>=1.7,<3
+jupyterlab>=4,<5
+ipykernel>=6,<8
+ipywidgets>=8,<9
+pytest>=8,<10

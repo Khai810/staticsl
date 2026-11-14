@@ -1,0 +1,25 @@
+# Generated and private runtime files for this module only
+.venv/
+.python/
+.uv-cache/
+.cache/
+.pytest_cache/
+__pycache__/
+.ipynb_checkpoints/
+.env
+.env.*
+kaggle.json
+*.pem
+*.key
+*.pt
+*.pth
+*.keras
+*.onnx
+*.task
+*.zip
+*.zip.part*
+runs/
+data/*
+!data/README.md
+assets/*
+!assets/README.md

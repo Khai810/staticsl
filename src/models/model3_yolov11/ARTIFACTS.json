@@ -1,0 +1,45 @@
+{
+  "run_id": "20261114T065750Z_baseline_d5cb4953",
+  "fingerprint": "fbb9d072079f9a08d42e953d5927b232f64497f0d4d3d3e8e9309e045772efdf",
+  "bundle_folder": "https://drive.google.com/drive/folders/1dJ9Zs-B-3CIRkxtrf0L8WjD6_pbg1ljZ",
+  "colab_notebook": "https://colab.research.google.com/drive/18S-EHozFcFV6deWvNv5Iy7SqjAdSD0kl",
+  "source": {
+    "url": "https://drive.google.com/file/d/1tD_-DFdf3Vw1-1PcMeIuNz_SRL8zcLhq/view?usp=drivesdk",
+    "sha256": "201bddb43d7534c01ff1930fa646887f42008b71757c7899aa23891c581acc03",
+    "bytes": 5202048
+  },
+  "dataset": {
+    "sha256": "9c0fec5330c93c62b1386a636e9f151568a3a005f8451cae7cec5a9161f0f9c5",
+    "bytes": 250319862,
+    "parts": [
+      {
+        "name": "dataset.zip.part001",
+        "url": "https://drive.google.com/file/d/1H0anwyCFhdJYE0Nez7dIgElz2PPPitpA/view?usp=drivesdk",
+        "sha256": "825d7440037b7cc8f7d5a3719e39b87567e8c2ec2ac159e7d841bd96937528ee",
+        "bytes": 83886080
+      },
+      {
+        "name": "dataset.zip.part002",
+        "url": "https://drive.google.com/file/d/10yC8arx3wt9pqLcM4TH2XN-geYEe1a5J/view?usp=drivesdk",
+        "sha256": "294d761955b973c708eeeb6a102b4fd6bd96684de25ff18f586a48f8104e494f",
+        "bytes": 83886080
+      },
+      {
+        "name": "dataset.zip.part003",
+        "url": "https://drive.google.com/file/d/1FTb-raTl34Ok1dh6Ds_fgCXZHq-tQR46/view?usp=drivesdk",
+        "sha256": "503f717a9dfcf7d8ee8da35bf14e57defc00ac56b08dd9e2be4efba3456c834b",
+        "bytes": 82547702
+      }
+    ]
+  },
+  "selected_model": {
+    "epoch": 45,
+    "url": "https://drive.google.com/file/d/1XMm9vNQjvxFftTAfh04U-vrO23hB8WPL/view",
+    "sha256": "512e24b594c2183913936d94b1b881b4ca7dd59d0a721989ac4a211e7b00cb88"
+  },
+  "full_run_url": "https://drive.google.com/drive/folders/1Ho7K2qwRJHOyIqUcVIzDgNUEr5CKGaKm",
+  "access": "Drive ownership/access permissions are unchanged; request access from owner if needed",
+  "final_test_run": false,
+  "raw_images_in_git": false,
+  "weights_in_git": false
+}
